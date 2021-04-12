@@ -59,7 +59,6 @@ function createDivsForColors(colorArray) {
 
 // TODO: Implement this function!------------------------
 
-/* first attempt---------------------//
 let choice1;
 let choice2;
 let card = [];
@@ -103,7 +102,7 @@ function handleCardClick(event) {
 	}
 }
 
-*/
+createDivsForColors(shuffledColors);
 
 //------------------
 
