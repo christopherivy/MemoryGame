@@ -59,8 +59,8 @@ function createDivsForColors(colorArray) {
 
 // TODO: Implement this function!------------------------
 
-let choice1;
-let choice2;
+let choice1 = null;
+let choice2 = null;
 let card = [];
 
 let numberOfChoices = 2;
@@ -80,13 +80,13 @@ function handleCardClick(event) {
 
 		//user has 2 choices remaining
 		if (numberOfChoices === 2) {
-			choice1 = event.target.className;
-			card.push(choice1);
+			choice1 = event.target;
+			card.push(choice1.className);
 		}
 		//this is the second choice
 		if (numberOfChoices === 1) {
-			choice2 = event.target.className;
-			card.push(choice2);
+			choice2 = event.target;
+			card.push(choice2.className);
 		}
 
 		//this is to see if choices match
@@ -95,9 +95,14 @@ function handleCardClick(event) {
 			console.log("match");
 		}
 		//if the choices do not match and its the last choice, then cards are flipped back over.
-		if (card[0] !== card[1] && numberOfChoices === 1) {
-			console.log("does not match:", card[0], "/", card[1]);
-		}
+
+		setTimeout(function () {
+			if (card[0] !== card[1] && numberOfChoices === 1) {
+				console.log("does not match:", card[0], "/", card[1]);
+				choice1.style.backgroundColor = "";
+				choice2.style.backgroundColor = "";
+			}
+		}, 1000);
 		numberOfChoices--;
 	}
 }
