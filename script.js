@@ -62,6 +62,8 @@ function createDivsForColors(colorArray) {
 let flippedCards = [];
 let choice = null;
 let clicksAllowed = true;
+let gameOver = COLORS.length / 2; //5
+let matches = 0;
 
 function handleCardClick(event) {
 	if (!clicksAllowed) return;
@@ -77,11 +79,14 @@ function handleCardClick(event) {
 	//have 2 cards been clicked
 	if (flippedCards.length === 2) {
 		//if cards match
+		clicksAllowed = false;
 		if (flippedCards[0] === flippedCards[1]) {
 			console.log("match");
 			//they matched reset flippedcards
 			flippedCards = [];
 			choice = null;
+			clicksAllowed = true;
+			matches++;
 		} else {
 			//if no match
 			console.log("no match");
@@ -90,6 +95,7 @@ function handleCardClick(event) {
 				choice.style.backgroundColor = "";
 				flippedCards = [];
 				choice = null;
+				clicksAllowed = true;
 			}, 1000);
 		}
 	} else {
@@ -97,7 +103,17 @@ function handleCardClick(event) {
 		choice = event.target;
 	}
 
-	console.log(color);
+	//this is to see if the game is over
+	if (matches === gameOver) {
+		setTimeout(() => {
+			alert("YOU WON THE GAME!!");
+			//this resets the game
+			for (let div of document.querySelectorAll("div")) {
+				div.style.backgroundColor = "";
+			}
+			matches = 0;
+		}, 500);
+	}
 }
 
 // when the DOM loads
