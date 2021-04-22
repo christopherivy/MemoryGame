@@ -64,14 +64,16 @@ let choice = null;
 let clicksAllowed = true;
 let gameOver = COLORS.length / 2; //5
 let matches = 0;
+let flipped = "flipped";
 
 function handleCardClick(event) {
-	if (!clicksAllowed) return;
+	if (!clicksAllowed || event.target.classList.contains(flipped)) return;
 	let selection = event.target;
 	let color = selection.className;
 
-	//turn card the class color
+	//make card the class color
 	selection.style.backgroundColor = color;
+	selection.classList.add(flipped);
 
 	//add the card to the array
 	flippedCards.push(color);
@@ -93,6 +95,9 @@ function handleCardClick(event) {
 			setTimeout(function () {
 				selection.style.backgroundColor = "";
 				choice.style.backgroundColor = "";
+				selection.classList.remove(flipped);
+				choice.classList.remove(flipped);
+
 				flippedCards = [];
 				choice = null;
 				clicksAllowed = true;
@@ -108,9 +113,10 @@ function handleCardClick(event) {
 		setTimeout(() => {
 			alert("YOU WON THE GAME!!");
 			//this resets the game
-			for (let div of document.querySelectorAll("div")) {
-				div.style.backgroundColor = "";
-			}
+			document.getElementById("game").innerHTML = "";
+			shuffledColors = shuffle(COLORS);
+			createDivsForColors(shuffledColors);
+
 			matches = 0;
 		}, 500);
 	}
